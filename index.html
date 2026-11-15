@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lorraine Xu</title>
+<meta name="description" content="Yunfei (Lorraine) Xu: EECS MEng at UC Berkeley. Human–robot interaction, XR, AI agents and full-stack web apps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column (~68ch) with media that breaks wider; a slim sticky index; coordinate-frame motif from robot programming. */
+:root {
+  --bg: #f3f4f1;
+  --surface: #ffffff;
+  --ink: #15191d;
+  --muted: #59616a;
+  --line: #dcdfd8;
+  --accent: #1d6b58;
+  --accent-soft: #e2efe9;
+  --axis-x: #d0493f;
+  --axis-y: #3a9656;
+  --axis-z: #3767cf;
+  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.1875rem;
+  --step-2: 1.5rem;
+  --step-3: 2.125rem;
+  --step-4: clamp(2.5rem, 7vw, 4.5rem);
+  --wide: 1080px;
+  --col: 44rem;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1214; --surface: #161a1d; --ink: #e7eae6; --muted: #9aa3a9; --line: #283035;
+    --accent: #63c3a6; --accent-soft: #17302a; --axis-x: #ef6b60; --axis-y: #5cc27a; --axis-z: #6b95f0;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1214; --surface: #161a1d; --ink: #e7eae6; --muted: #9aa3a9; --line: #283035;
+  --accent: #63c3a6; --accent-soft: #17302a; --axis-x: #ef6b60; --axis-y: #5cc27a; --axis-z: #6b95f0;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 var(--step-0)/1.6 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.1; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+ul { margin: 0; padding-left: 1.1rem; }
+li + li { margin-top: 0.35rem; }
+
+.wrap {
+  max-width: var(--wide);
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- top bar ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.7rem; }
+.bar .mark { font-family: var(--font-display); font-weight: 700; color: var(--ink); text-decoration: none; font-size: var(--step-1); }
+.bar nav { display: flex; gap: 1.1rem; overflow-x: auto; scrollbar-width: none; }
+.bar nav a { color: var(--muted); text-decoration: none; font-size: var(--step--1); font-family: var(--font-mono); white-space: nowrap; }
+.bar nav a:hover { color: var(--ink); }
+
+/* ---------- hero ---------- */
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 340px); gap: 2.5rem; align-items: center; padding-block: 4.5rem 3.5rem; }
+.hero h1 { font-size: var(--step-4); letter-spacing: -0.03em; }
+.hero h1 .alt { display: block; font-size: 0.42em; font-weight: 500; color: var(--muted); letter-spacing: -0.01em; margin-top: 0.5rem; }
+.hero .lede { font-size: var(--step-1); max-width: 34em; margin-top: 1.5rem; }
+.hero .facts { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 1.5rem; font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+.links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.5rem 0.9rem; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--surface); color: var(--ink); text-decoration: none; font-size: 0.9rem; font-weight: 500;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn.primary:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.btn svg { width: 1em; height: 1em; }
+.email { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); margin-top: 0.75rem; user-select: all; }
+.frame { position: relative; aspect-ratio: 1; max-width: 100%; }
+.frame canvas { width: 100%; height: 100%; display: block; }
+.frame figcaption { position: absolute; left: 0; bottom: 0; font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+
+/* ---------- sections ---------- */
+section { border-top: 1px solid var(--line); }
+section > .wrap { padding-block: 4rem; }
+.sec-head { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.5rem; align-items: baseline; margin-bottom: 2.25rem; }
+.sec-head .label { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+.sec-head h2 { font-size: var(--step-3); }
+.sec-head p { grid-column: 2; color: var(--muted); max-width: 40em; margin-top: -0.75rem; }
+.indent { margin-left: calc(11rem + 1.5rem); }
+
+/* research feature */
+.feature { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 2rem; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 2rem; }
+.feature h3 { font-size: var(--step-2); }
+.meta { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+.feature .meta { margin-top: 0.5rem; }
+.feature ul { margin-top: 1.1rem; }
+.modalities { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; align-content: start; }
+.modalities div { border: 1px solid var(--line); border-radius: 10px; padding: 0.85rem; background: var(--bg); }
+.modalities b { display: block; font-family: var(--font-display); font-size: var(--step-1); }
+.modalities span { font-size: var(--step--1); color: var(--muted); }
+.modalities .wide { grid-column: 1 / -1; }
+
+/* projects */
+.projects { display: grid; gap: 4rem; }
+.proj { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 2.25rem; align-items: start; }
+.proj:nth-child(even) .media { order: 2; }
+.proj h3 { font-size: var(--step-2); }
+.proj .meta { margin-top: 0.4rem; }
+.proj .desc { margin-top: 1rem; }
+.proj ul { margin-top: 0.9rem; color: var(--ink); }
+.proj li::marker { color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.1rem; padding: 0; list-style: none; }
+.chips li { margin: 0; font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.55rem; border-radius: 6px; background: var(--accent-soft); color: var(--accent); }
+.repo-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.1rem; font-size: 0.92rem; }
+
+.video {
+  position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; max-width: 100%;
+  border: 1px solid var(--line); border-radius: 12px; overflow: hidden; padding: 0; cursor: pointer;
+  background: var(--ink); color: inherit; font: inherit;
+}
+.video img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease, filter 0.3s ease; }
+.video:hover img { transform: scale(1.02); filter: brightness(0.9); }
+.video .play {
+  position: absolute; left: 1rem; bottom: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--surface); color: var(--ink); border-radius: 999px; padding: 0.45rem 0.85rem 0.45rem 0.55rem;
+  font-size: 0.85rem; font-weight: 600; box-shadow: 0 2px 10px rgb(0 0 0 / 0.18);
+}
+.video .play i { width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accent); display: grid; place-items: center; }
+.video .play i::after { content: ""; border-left: 8px solid var(--surface); border-top: 5px solid transparent; border-bottom: 5px solid transparent; margin-left: 2px; }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video.playing { cursor: default; }
+.poster {
+  position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 0.6rem;
+  padding: 1.25rem 1.5rem 4rem; text-align: left;
+  background: radial-gradient(120% 90% at 85% 10%, color-mix(in srgb, var(--accent) 40%, var(--ink)) 0%, var(--ink) 60%);
+  color: var(--bg);
+}
+.poster .bubble { max-width: 80%; font-size: 0.85rem; line-height: 1.4; padding: 0.55rem 0.8rem; border-radius: 12px; }
+.poster .u { align-self: flex-end; background: var(--accent); color: var(--ink); border-bottom-right-radius: 3px; }
+.poster .a { background: color-mix(in srgb, var(--bg) 14%, transparent); border-bottom-left-radius: 3px; }
+.poster .a code { font-family: var(--font-mono); font-size: 0.8rem; }
+.media .caption { margin-top: 0.55rem; font-size: var(--step--1); color: var(--muted); }
+
+/* vision gallery */
+.gallery { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1rem; }
+.shot { grid-column: span 2; display: flex; flex-direction: column; gap: 0.6rem; text-decoration: none; color: var(--ink); }
+.shot:nth-child(-n+2) { grid-column: span 3; }
+.shot .img { aspect-ratio: 4 / 3; max-width: 100%; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+.shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.shot:hover img { transform: scale(1.03); }
+.shot .n { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+.shot b { font-family: var(--font-display); font-size: var(--step-1); line-height: 1.2; display: block; }
+.shot span.t { font-size: var(--step--1); color: var(--muted); }
+.shot:hover b { color: var(--accent); }
+
+/* more code list */
+.more { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 3rem; }
+.more a { display: block; padding: 1.1rem 1.2rem; border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: var(--ink); background: var(--surface); }
+.more a:hover { border-color: var(--accent); }
+.more b { display: block; font-weight: 600; }
+.more span { display: block; font-size: var(--step--1); color: var(--muted); margin-top: 0.3rem; }
+.subhead { font-family: var(--font-mono); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-top: 3.5rem; }
+.subhead + .more { margin-top: 1rem; }
+
+/* experience timeline */
+.timeline { list-style: none; padding: 0; display: grid; gap: 0; }
+.timeline li { margin: 0; display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.5rem; padding-block: 1.4rem; border-top: 1px solid var(--line); }
+.timeline li:first-child { border-top: 0; padding-top: 0; }
+.timeline .when { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 0.2rem; }
+.timeline h3 { font-size: var(--step-1); }
+.timeline h3 small { font-family: var(--font-body); font-weight: 400; color: var(--muted); font-size: 0.85em; }
+.timeline p { margin-top: 0.4rem; max-width: 42em; }
+
+/* publications */
+.pubs { list-style: none; padding: 0; counter-reset: pub; }
+.pubs li { margin: 0; padding-block: 1rem; border-top: 1px solid var(--line); display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.5rem; }
+.pubs li:first-child { border-top: 0; padding-top: 0; }
+.pubs .venue { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+.pubs b { font-weight: 600; }
+.pubs .authors { color: var(--muted); font-size: 0.93rem; margin-top: 0.2rem; }
+.pubs .authors strong { color: var(--ink); font-weight: 600; }
+.older { margin-top: 2rem; }
+.older summary { cursor: pointer; font-family: var(--font-mono); font-size: var(--step--1); color: var(--accent); }
+.older ul { margin-top: 1rem; color: var(--muted); font-size: 0.93rem; }
+
+/* education + skills */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; }
+.edu { list-style: none; padding: 0; }
+.edu li { margin: 0 0 1.25rem; }
+.edu b { font-family: var(--font-display); font-size: var(--step-1); display: block; }
+.skills dl { margin: 0; display: grid; gap: 1rem; }
+.skills dt { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.skills dd { margin: 0.2rem 0 0; }
+
+footer { border-top: 1px solid var(--line); }
+footer .wrap { padding-block: 2.5rem 3rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; color: var(--muted); font-size: var(--step--1); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 3rem 2.5rem; }
+  .frame { max-width: 220px; }
+  .sec-head { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; }
+  .sec-head p { grid-column: 1; margin-top: 0.4rem; }
+  .indent { margin-left: 0; }
+  .feature, .proj { grid-template-columns: minmax(0, 1fr); }
+  .proj:nth-child(even) .media { order: 0; }
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .shot, .shot:nth-child(-n+2) { grid-column: span 1; }
+  .more { grid-template-columns: minmax(0, 1fr); }
+  .timeline li, .pubs li { grid-template-columns: minmax(0, 1fr); gap: 0.3rem; }
+  .two { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .bar nav a:nth-child(n+4) { display: none; }
+  .feature { padding: 1.25rem; }
+  .poster { padding: 0.9rem 1rem 3.5rem; gap: 0.45rem; }
+  .poster .bubble { font-size: 0.78rem; max-width: 88%; padding: 0.45rem 0.65rem; }
+  .video .play { left: 0.75rem; bottom: 0.75rem; }
+  .modalities { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .gallery { grid-template-columns: minmax(0, 1fr); }
+  section > .wrap { padding-block: 3rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .video img, .shot img { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="mark" href="#top">Lorraine Xu</a>
+    <nav aria-label="Sections">
+      <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
+      <a href="#vision">Vision</a>
+      <a href="#experience">Experience</a>
+      <a href="#papers">Papers</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Yunfei Xu<span class="alt">goes by Lorraine</span></h1>
+        <p class="lede">I build the interfaces between people and intelligent systems: AR controls for robot teams, AI agents that do real work, and the full-stack apps around them.</p>
+        <div class="facts">
+          <span>EECS MEng · UC Berkeley</span>
+          <span>B.S. CS · Columbia</span>
+          <span>B.S. Math · Davidson</span>
+          <span>Berkeley, CA</span>
+        </div>
+        <div class="links">
+          <a class="btn primary" href="#projects">See projects</a>
+          <a class="btn" href="https://github.com/lorraine-xu" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            GitHub
+          </a>
+          <a class="btn" href="mailto:yunfei.xu.1017@gmail.com">Email</a>
+          <a class="btn" href="https://arxiv.org/abs/2510.08543" target="_blank" rel="noopener">VideoNorms paper</a>
+        </div>
+        <p class="email">yunfei.xu.1017@gmail.com</p>
+      </div>
+      <figure class="frame" style="margin:0">
+        <canvas id="gizmo" aria-label="A rotating 3D coordinate frame following a waypoint path" role="img"></canvas>
+        <figcaption>tool frame · waypoints p₀–p₅</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- ===================== RESEARCH ===================== -->
+  <section id="research">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Now</span>
+        <h2>Current research</h2>
+      </div>
+      <article class="feature">
+        <div>
+          <h3>HoloIntent</h3>
+          <p style="margin-top:.35rem">An XR-based human–robot communication platform for AI-enabled autonomous systems.</p>
+          <p class="meta">CITRIS Foundry · Advisor: Dr. Alexandre Bayen · UC Berkeley · Aug 2026 – present</p>
+          <ul>
+            <li>An AR interface for commanding several autonomous robots at once, showing each robot's status, camera feed, planned path and perception failures.</li>
+            <li>Built in Unity with the Meta XR SDK for AR glasses, wiring voice, gesture and controller input to robot communication with real-time feedback.</li>
+            <li>Integrates human-intention prediction, autonomous navigation and failure recovery in a search-and-rescue scenario with quadruped and humanoid robots.</li>
+            <li>User studies compare modalities on command success rate, task completion time and recovery efficiency.</li>
+          </ul>
+        </div>
+        <div class="modalities" aria-label="Input modalities and robots">
+          <div><b>Voice</b><span>spoken commands</span></div>
+          <div><b>Gesture</b><span>hand tracking</span></div>
+          <div><b>Controller</b><span>pointing &amp; select</span></div>
+          <div class="wide"><b>Quadruped + humanoid</b><span>multi-robot search and rescue, with intent prediction and failure recovery in the loop</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== PROJECTS ===================== -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Built</span>
+        <h2>Projects, with demos</h2>
+        <p>Each one has a recorded walkthrough. Press play to watch it here.</p>
+      </div>
+
+      <div class="projects">
+
+        <article class="proj">
+          <div class="media">
+            <button class="video" type="button" data-loom="152bfad507e3480bb68376954f37a959" aria-label="Play PartSelect demo video">
+              <div class="poster" aria-hidden="true">
+                <div class="bubble u">My dishwasher isn't draining. Model WDT780SAEM1</div>
+                <div class="bubble a">Clean the filter first. Still not draining? Check the <code>drain pump</code>.</div>
+              </div>
+              <span class="play"><i></i>Watch demo · 5 min</span>
+            </button>
+            <p class="caption">Loom walkthrough of the chat agent</p>
+          </div>
+          <div>
+            <h3>PartSelect Parts Assistant</h3>
+            <p class="meta">AI engineering case study · Feb 2026</p>
+            <p class="desc">A chat agent that diagnoses refrigerator and dishwasher problems and recommends genuine OEM parts from PartSelect.com, with a 6-tool agentic loop on the Claude API.</p>
+            <ul>
+              <li>A rule-based pre-classifier detects intent and pre-fetches data before the model call, removing a round trip and cutting time-to-first-token by about 40%.</li>
+              <li>Unknown model numbers are scraped live and cached in Supabase, growing coverage from 2 seeded models to thousands of Whirlpool appliances.</li>
+              <li>Hybrid Chroma semantic search plus keyword fallback, image and PDF uploads, and layered safeguards against invented parts or prices.</li>
+            </ul>
+            <ul class="chips"><li>FastAPI</li><li>React</li><li>Claude API</li><li>Supabase</li><li>Chroma</li></ul>
+            <div class="repo-links">
+              <a href="https://github.com/lorraine-xu/partselect-backend" target="_blank" rel="noopener">Backend repo ↗</a>
+              <a href="https://github.com/lorraine-xu/partselect-frontend" target="_blank" rel="noopener">Frontend repo ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="media">
+            <button class="video" type="button" data-yt="2lF13gP0aNM" aria-label="Play NOWHERE demo video">
+              <img src="assets/yt-2lF13gP0aNM.jpg" alt="" loading="lazy">
+              <span class="play"><i></i>Watch demo</span>
+            </button>
+          </div>
+          <div>
+            <h3>NoWhere, NowHere!</h3>
+            <p class="meta">Global photo-sharing platform · Apr – Jun 2025</p>
+            <p class="desc">People post a moment from their day as three images (person, time, place) with its city and country. Every post lands on an interactive 3D Earth you can spin, zoom and click into.</p>
+            <ul>
+              <li>Three.js globe with cluster-aware markers for 150+ submissions, plus daily, collage and poster views.</li>
+              <li>Flask backend with AWS S3 media storage; the CountriesNow API covers 195+ countries for location entry.</li>
+            </ul>
+            <ul class="chips"><li>Flask</li><li>Three.js</li><li>AWS S3</li><li>JavaScript</li></ul>
+            <div class="repo-links"><a href="https://github.com/lorraine-xu/NOWHERE" target="_blank" rel="noopener">GitHub repo ↗</a></div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="media">
+            <button class="video" type="button" data-yt="lXMydGnoMgk" aria-label="Play Chinese Regional Cuisines demo video">
+              <img src="assets/yt-lXMydGnoMgk.jpg" alt="" loading="lazy">
+              <span class="play"><i></i>Watch demo</span>
+            </button>
+          </div>
+          <div>
+            <h3>Chinese Regional Cuisines</h3>
+            <p class="meta">UI Design course · team project · Mar – May 2025</p>
+            <p class="desc">A 10-minute interactive lesson on five regional food cultures: Xinjiang, Sichuan, Dongbei, Jiangnan and Guangdong. Start from a clickable map of China and work through each region.</p>
+            <ul>
+              <li>Flip cards for signature dishes, with pronunciation guides, origin stories and cultural notes.</li>
+              <li>Short regional videos, a quiz and learning journal per region, and a final quiz.</li>
+              <li>Refined over three rounds of user testing for clearer hierarchy and first-time-learner accessibility.</li>
+            </ul>
+            <ul class="chips"><li>HTML/CSS</li><li>JavaScript</li><li>Flask</li><li>User testing</li></ul>
+            <div class="repo-links"><a href="https://github.com/lorraine-xu/Chinese_Regional_Cuisines" target="_blank" rel="noopener">GitHub repo ↗</a></div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="media">
+            <button class="video" type="button" data-yt="n_SqJQC0hTM" aria-label="Play K-pop Explorer demo video">
+              <img src="assets/yt-n_SqJQC0hTM.jpg" alt="" loading="lazy">
+              <span class="play"><i></i>Watch demo</span>
+            </button>
+          </div>
+          <div>
+            <h3>K-pop Explorer</h3>
+            <p class="meta">UI Design course · Jan – Mar 2025</p>
+            <p class="desc">Browse, search, add and edit profiles of 10+ K-pop groups.</p>
+            <ul>
+              <li>AJAX forms with client-side validation and a confirmation step after every add or edit.</li>
+              <li>Case-insensitive search across several fields with live match highlighting.</li>
+              <li>Accessible by design: alt text, keyboard navigation and a consistent palette.</li>
+            </ul>
+            <ul class="chips"><li>Flask</li><li>Jinja2</li><li>JavaScript</li></ul>
+            <div class="repo-links"><a href="https://github.com/lorraine-xu/K-pop-Explorer" target="_blank" rel="noopener">GitHub repo ↗</a></div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="media">
+            <button class="video" type="button" data-yt="EKRNJkGr39c" aria-label="Play Walk Service demo video">
+              <img src="assets/yt-EKRNJkGr39c.jpg" alt="" loading="lazy">
+              <span class="play"><i></i>Watch demo</span>
+            </button>
+          </div>
+          <div>
+            <h3>Walk Service</h3>
+            <p class="meta">Cloud Computing course · Fall 2025</p>
+            <p class="desc">The backend for a dog-walking app: owners request walks, walkers accept them, and each walk moves from requested to assigned to completed.</p>
+            <ul>
+              <li>FastAPI microservice in Docker, deployed on Google Cloud Run with a Cloud SQL (MySQL) connection.</li>
+              <li>Creating a walk publishes a <code>walk_created</code> event to Pub/Sub, which triggers a Cloud Function.</li>
+            </ul>
+            <ul class="chips"><li>FastAPI</li><li>Cloud Run</li><li>Cloud SQL</li><li>Pub/Sub</li><li>Docker</li></ul>
+            <div class="repo-links"><a href="https://github.com/lorraine-xu/Walk-Service" target="_blank" rel="noopener">GitHub repo ↗</a></div>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="subhead">More on GitHub</p>
+      <div class="more">
+        <a href="https://github.com/lorraine-xu/CookShare" target="_blank" rel="noopener">
+          <b>CookShare</b>
+          <span>Social cooking platform for students. Flask with raw SQL over a 7-entity PostgreSQL schema. Intro to Databases, 2024.</span>
+        </a>
+        <a href="https://github.com/lorraine-xu/Applied-Machine-Learning-Assignment-2-From-Trees-to-Neural-Networks" target="_blank" rel="noopener">
+          <b>From Trees to Neural Networks</b>
+          <span>Applied ML notebook: decision trees through neural networks on the bank marketing dataset.</span>
+        </a>
+        <a href="https://github.com/lorraine-xu/Applied-Machine-Learning-Assignment-3-Transformer-is-All-You-Need" target="_blank" rel="noopener">
+          <b>Transformer is All You Need</b>
+          <span>Applied ML notebook: building and training a transformer on Shakespeare text.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== VISION ===================== -->
+  <section id="vision">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Pixels</span>
+        <h2>Computer vision &amp; computational photography</h2>
+        <p>Project write-ups from Intro to Computer Vision and Computational Photography at UC Berkeley, Fall 2026.</p>
+      </div>
+      <div class="gallery">
+        <a class="shot" href="https://lorraine-xu.github.io/project-4/" target="_blank" rel="noopener">
+          <div class="img"><img src="assets/cv4.jpg" alt="Courtyard panorama stitched from two photos" loading="lazy"></div>
+          <span class="n">Project 4</span>
+          <b>Image Warping and Mosaicing</b>
+          <span class="t">Homographies, rectification, two-band blending, automatic feature matching with RANSAC.</span>
+        </a>
+        <a class="shot" href="https://lorraine-xu.github.io/project-3/" target="_blank" rel="noopener">
+          <div class="img"><img src="assets/cv3.jpg" alt="Text-conditioned image edits of the Campanile" loading="lazy"></div>
+          <span class="n">Project 3</span>
+          <b>Exploring Flow Models</b>
+          <span class="t">Generating and editing images with flow matching, guidance, and a UNet trained from scratch.</span>
+        </a>
+        <a class="shot" href="https://lorraine-xu.github.io/project-2/" target="_blank" rel="noopener">
+          <div class="img"><img src="assets/cv2.jpg" alt="Apple and orange blended into an oraple" loading="lazy"></div>
+          <span class="n">Project 2</span>
+          <b>Fun with Filters and Frequencies</b>
+          <span class="t">Convolutions, sharpening, hybrid images, multiresolution blending.</span>
+        </a>
+        <a class="shot" href="https://lorraine-xu.github.io/project-1/" target="_blank" rel="noopener">
+          <div class="img"><img src="assets/cv1.jpg" alt="Colorized Prokudin-Gorskii portrait of the Emir" loading="lazy"></div>
+          <span class="n">Project 1</span>
+          <b>Colorizing Prokudin-Gorskii</b>
+          <span class="t">Aligning glass-plate RGB channels with a multi-scale image pyramid.</span>
+        </a>
+        <a class="shot" href="https://lorraine-xu.github.io/" target="_blank" rel="noopener">
+          <div class="img"><img src="assets/cv0.jpg" alt="Building facade compressed by a long focal length" loading="lazy"></div>
+          <span class="n">Project 0</span>
+          <b>Camera, Perspective &amp; the Dolly Zoom</b>
+          <span class="t">Focal length, center of projection, and a dolly zoom GIF.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXPERIENCE ===================== -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Work</span>
+        <h2>Experience</h2>
+      </div>
+      <ol class="timeline">
+        <li>
+          <span class="when">May – Aug 2026</span>
+          <div>
+            <h3>3D Infotech <small>· Software Engineering Intern · Irvine, CA</small></h3>
+            <p>Built Aruna Motion 2.0, a Java PolyScope 5 plugin for 7-axis coordinated motion on Universal Robots with MotionPlus and EtherCAT. Graphical waypoint programming generates URScript automatically. Also built calibration, frame tracking and license verification, and debugged thread, socket and coordinate-transform issues on hardware.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">Sep – Dec 2025</span>
+          <div>
+            <h3>Home-viz.com <small>· AI Engineering Intern · New York</small></h3>
+            <p>Built RemodelBuddy.ai, a Next.js assistant that measures rooms from photos, visualizes colors and materials, and recommends local suppliers. Built Remod, a supplier messaging system on Twilio and Supabase, with an OpenAI agent that drafts replies using RAG over project history.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">May – Aug 2025</span>
+          <div>
+            <h3>Gnohive <small>· Software Engineering Intern · Remote</small></h3>
+            <p>Wrote the technical design for an internal admin dashboard. Built user and role management in React with JWT-secured Express and MySQL, and led the ticketing module and its external APIs.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">Jun – Aug 2025</span>
+          <div>
+            <h3>Huaqin Technology <small>· Driver Development Intern · Shanghai</small></h3>
+            <p>Ran daily build validation as July PAT manager, 20+ patches a day. Added a device-compatibility check to the flashing script so misconfigured boards can't be bricked.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">May – Aug 2024</span>
+          <div>
+            <h3>Tencent <small>· Front-End Development Intern · Shanghai</small></h3>
+            <p>Designed two modules for an AI-driven database platform: spec document automation and community sentiment tracking. They cut manual admin time by about 30%.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">Jun – Aug 2023</span>
+          <div>
+            <h3>Bosch Automotive <small>· Software Development Intern · Suzhou</small></h3>
+            <p>Improved a Vue tooling management system, built a linear programming model for global supply allocation with 40+ constraints, and made a Three.js WeChat Mini Program for 3D car parts.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===================== PAPERS ===================== -->
+  <section id="papers">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Papers</span>
+        <h2>Publications &amp; presentations</h2>
+      </div>
+      <ol class="pubs">
+        <li>
+          <span class="venue">IC2S2 2026 · C3NLP @ ACL 2026</span>
+          <div>
+            <a href="https://arxiv.org/abs/2510.08543" target="_blank" rel="noopener"><b>VideoNorms: Benchmarking Cultural Awareness of Video Language Models</b></a>
+            <p class="authors">N. R. Varimalla, <strong>Y. Xu</strong>, A. Saakyan, M. F. Wang, S. Muresan · arXiv:2510.08543</p>
+            <p style="margin-top:.4rem">Co-led a benchmark testing whether video language models understand socio-cultural norms in TV clips. Built the annotation pipeline and led benchmark design and error analysis.</p>
+          </div>
+        </li>
+        <li>
+          <span class="venue">Columbia DS &amp; AI Research Fair</span>
+          <div>
+            <a href="https://arxiv.org/abs/2511.21930" target="_blank" rel="noopener"><b>A Comparative Study of LLM Prompting and Fine-Tuning for Cross-genre Authorship Attribution on Chinese Lyrics</b></a>
+            <p class="authors">Y. Li, <strong>L. Xu</strong>, M. F. Wang · arXiv:2511.21930</p>
+          </div>
+        </li>
+      </ol>
+      <details class="older">
+        <summary>Earlier research (2022 – 2024)</summary>
+        <ul>
+          <li>Deep learning for the AT-TPC nuclear physics detector: point-cloud reconstruction. ALPhA Lab, Davidson, 2024.</li>
+          <li>Partitioning and scheduling algorithms for mixed-criticality systems. Math/CS Coffee Talk, Davidson, 2023.</li>
+          <li>Gender in 40 years of the CHI conference. Campus Research Symposium, Davidson, 2022.</li>
+          <li>Microbial compositions of B10 and B10.A mouse guts. Campus Research Symposium, Davidson, 2022.</li>
+          <li>Food insecurity in developing countries before and after COVID-19. 6th Intl. Conference on Economic Management and Green Development, 2022.</li>
+          <li>Two Chinese patents: a microfluidic chip magnetic bead suction device, and a multi-functional umbrella support.</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Background</span>
+        <h2>Education &amp; skills</h2>
+      </div>
+      <div class="two">
+        <ul class="edu">
+          <li><b>UC Berkeley</b>MEng, Electrical Engineering &amp; Computer Sciences<br><span class="meta">Aug 2026 – May 2027</span></li>
+          <li><b>Columbia University</b>B.S. Computer Science, School of Engineering · GPA 3.89<br><span class="meta">Sep 2024 – May 2026</span></li>
+          <li><b>Davidson College</b>B.S. Mathematics · GPA 3.87<br><span class="meta">Aug 2021 – May 2024</span></li>
+        </ul>
+        <div class="skills">
+          <dl>
+            <div><dt>AR/VR, HCI &amp; robotics</dt><dd>Unity, Meta XR SDK, human–robot interaction, UI/UX design, user testing</dd></div>
+            <div><dt>AI &amp; ML</dt><dd>LLMs, multimodal AI, RAG, AI agents, OpenAI and Claude APIs, computer vision</dd></div>
+            <div><dt>Languages</dt><dd>Python, Java, C/C++, JavaScript, TypeScript, SQL, R</dd></div>
+            <div><dt>Frameworks</dt><dd>React, Next.js, Vue, Express, Flask, FastAPI, Three.js, TensorFlow</dd></div>
+            <div><dt>Data &amp; cloud</dt><dd>MySQL, PostgreSQL, Supabase, Chroma, AWS, GCP, Docker</dd></div>
+            <div><dt>Spoken</dt><dd>Mandarin (native), English (fluent), Korean (intermediate)</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Yunfei (Lorraine) Xu</span>
+    <span><a href="https://github.com/lorraine-xu" target="_blank" rel="noopener">github.com/lorraine-xu</a></span>
+  </div>
+</footer>
+
+<script>
+/* Click-to-play: swap the cover for the real player only when asked. */
+document.querySelectorAll('.video').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    if (btn.classList.contains('playing')) return;
+    var src;
+    if (btn.dataset.yt) src = 'https://www.youtube-nocookie.com/embed/' + btn.dataset.yt + '?autoplay=1&rel=0';
+    else if (btn.dataset.loom) src = 'https://www.loom.com/embed/' + btn.dataset.loom + '?autoplay=1&hide_owner=true&hideEmbedTopBar=true';
+    if (!src) return;
+    var f = document.createElement('iframe');
+    f.src = src;
+    f.title = btn.getAttribute('aria-label').replace('Play ', '');
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    btn.innerHTML = '';
+    btn.appendChild(f);
+    btn.classList.add('playing');
+    btn.removeAttribute('aria-label');
+  });
+});
+
+/* Hero: a robot tool frame (x/y/z axes) gliding along a waypoint spline. */
+(function () {
+  var c = document.getElementById('gizmo');
+  if (!c) return;
+  var ctx = c.getContext('2d');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var css = getComputedStyle(document.documentElement);
+  function tok(n) { return css.getPropertyValue(n).trim(); }
+  var colors;
+  function readColors() { css = getComputedStyle(document.documentElement); colors = { x: tok('--axis-x'), y: tok('--axis-y'), z: tok('--axis-z'), ink: tok('--ink'), muted: tok('--muted'), line: tok('--line'), accent: tok('--accent') }; }
+  readColors();
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', readColors);
+
+  var W, H, dpr;
+  function size() {
+    dpr = window.devicePixelRatio || 1;
+    var r = c.getBoundingClientRect();
+    W = r.width; H = r.height;
+    c.width = W * dpr; c.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  size();
+  window.addEventListener('resize', size);
+
+  // waypoints in a unit cube
+  var P = [[-0.7,-0.5,-0.2],[-0.3,0.4,0.3],[0.2,0.55,-0.25],[0.65,0.1,0.25],[0.35,-0.5,0.4],[-0.2,-0.35,-0.45]];
+  function cr(p0,p1,p2,p3,t){var t2=t*t,t3=t2*t;return [0,1,2].map(function(i){return 0.5*((2*p1[i])+(-p0[i]+p2[i])*t+(2*p0[i]-5*p1[i]+4*p2[i]-p3[i])*t2+(-p0[i]+3*p1[i]-3*p2[i]+p3[i])*t3);});}
+  function path(u){var n=P.length;var s=u*n;var i=Math.floor(s)%n;var t=s-Math.floor(s);return cr(P[(i-1+n)%n],P[i],P[(i+1)%n],P[(i+2)%n],t);}
+
+  function proj(v, yaw, pitch) {
+    var cy=Math.cos(yaw), sy=Math.sin(yaw), cp=Math.cos(pitch), sp=Math.sin(pitch);
+    var x=v[0]*cy - v[2]*sy, z=v[0]*sy + v[2]*cy;
+    var y=v[1]*cp - z*sp; z = v[1]*sp + z*cp;
+    var s = Math.min(W,H)*0.36;
+    return [W/2 + x*s, H/2 - y*s, z];
+  }
+  function line(a,b,col,w){ctx.strokeStyle=col;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();}
+
+  function draw(time) {
+    var t = reduce ? 0.18 : time/1000;
+    var yaw = 0.6 + t*0.12, pitch = 0.42;
+    ctx.clearRect(0,0,W,H);
+
+    // world grid on the floor plane
+    ctx.globalAlpha = 0.9;
+    for (var g=-1; g<=1.0001; g+=0.25) {
+      line(proj([g,-0.8,-1],yaw,pitch), proj([g,-0.8,1],yaw,pitch), colors.line, 1);
+      line(proj([-1,-0.8,g],yaw,pitch), proj([1,-0.8,g],yaw,pitch), colors.line, 1);
+    }
+    ctx.globalAlpha = 1;
+
+    // spline path
+    ctx.setLineDash([3,4]);
+    ctx.strokeStyle = colors.muted; ctx.lineWidth = 1.2; ctx.beginPath();
+    for (var k=0;k<=240;k++){var q=proj(path(k/240),yaw,pitch); if(k===0)ctx.moveTo(q[0],q[1]); else ctx.lineTo(q[0],q[1]);}
+    ctx.stroke(); ctx.setLineDash([]);
+
+    // waypoints
+    ctx.font = '500 11px ' + tok('--font-mono');
+    P.forEach(function(p,i){var q=proj(p,yaw,pitch);ctx.fillStyle=colors.ink;ctx.beginPath();ctx.arc(q[0],q[1],3,0,Math.PI*2);ctx.fill();ctx.fillStyle=colors.muted;ctx.fillText('p'+i,q[0]+6,q[1]-6);});
+
+    // moving tool frame, oriented along the path tangent
+    var u = (t*0.045) % 1;
+    var a = path(u), b = path((u+0.003)%1);
+    var fx=[b[0]-a[0],b[1]-a[1],b[2]-a[2]]; var m=Math.hypot(fx[0],fx[1],fx[2])||1; fx=fx.map(function(v){return v/m;});
+    var up=[0,1,0]; var fz=[fx[1]*up[2]-fx[2]*up[1], fx[2]*up[0]-fx[0]*up[2], fx[0]*up[1]-fx[1]*up[0]];
+    m=Math.hypot(fz[0],fz[1],fz[2])||1; fz=fz.map(function(v){return v/m;});
+    var fy=[fz[1]*fx[2]-fz[2]*fx[1], fz[2]*fx[0]-fz[0]*fx[2], fz[0]*fx[1]-fz[1]*fx[0]];
+    var L=0.28, o=proj(a,yaw,pitch);
+    [[fx,colors.x,'x'],[fy,colors.y,'y'],[fz,colors.z,'z']].map(function(ax){
+      var e=[a[0]+ax[0][0]*L,a[1]+ax[0][1]*L,a[2]+ax[0][2]*L]; var q=proj(e,yaw,pitch); return {q:q,col:ax[1],n:ax[2]};
+    }).sort(function(p,q){return q.q[2]-p.q[2];}).forEach(function(ax){
+      line(o, ax.q, ax.col, 2.5);
+      ctx.fillStyle=ax.col; ctx.fillText(ax.n, ax.q[0]+4, ax.q[1]+4);
+    });
+    ctx.fillStyle=colors.ink; ctx.beginPath(); ctx.arc(o[0],o[1],4,0,Math.PI*2); ctx.fill();
+
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
